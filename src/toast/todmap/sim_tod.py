@@ -824,8 +824,8 @@ class TODGround(TOD):
         self._site_lon = site_lon
         self._site_lat = site_lat
         self._site_alt = site_alt
-        if azmin == azmax:
-            raise RuntimeError("TODGround requires non-empty azimuth range")
+        #if azmin == azmax:
+        #    raise RuntimeError("TODGround requires non-empty azimuth range")
         self._azmin = azmin * degree
         self._azmax = azmax * degree
         if el < 1 or el > 89:
@@ -869,7 +869,13 @@ class TODGround(TOD):
                 mpicomm.Barrier()
             tm.start()
 
-        sizes, starts = self.simulate_scan(samples)
+        # sizes, starts = self.simulate_scan(samples)
+        if azmin == azmax:
+            self._azmin = 0
+            self._azmax = 2 * np.pi
+            sizes, starts = self.simulate_scan(samples)
+        else:
+            sizes, starts = self.simulate_scan(samples)
 
         if self._report_timing:
             if mpicomm is not None:

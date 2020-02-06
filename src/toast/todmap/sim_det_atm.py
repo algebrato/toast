@@ -907,35 +907,35 @@ class OpSimAtmosphere(Operator):
                 azmax_det = np.amax(az[az < np.pi])
             elmin_det = np.amin(el)
             elmax_det = np.amax(el)
-            if (
-                not (azmin <= azmin_det and azmax_det <= azmax)
-                and not (
-                    azmin <= azmin_det - 2 * np.pi and azmax_det - 2 * np.pi <= azmax
-                )
-            ) or not (elmin <= elmin_det and elmin_det <= elmax):
-                # DEBUG begin
-                import pickle
-
-                with open("bad_quats_{}_{}.pck".format(rank, det), "wb") as fout:
-                    pickle.dump(
-                        [scan_range, az, el, azelquat, tod._boresight_azel], fout
-                    )
-                # DEBUG end
-                raise RuntimeError(
-                    prefix + "Detector Az/El: [{:.5f}, {:.5f}], "
-                    "[{:.5f}, {:.5f}] is not contained in "
-                    "[{:.5f}, {:.5f}], [{:.5f} {:.5f}]"
-                    "".format(
-                        azmin_det,
-                        azmax_det,
-                        elmin_det,
-                        elmax_det,
-                        azmin,
-                        azmax,
-                        elmin,
-                        elmax,
-                    )
-                )
+            # if (
+            #     not (azmin <= azmin_det and azmax_det <= azmax)
+            #     and not (
+            #         azmin <= azmin_det - 2 * np.pi and azmax_det - 2 * np.pi <= azmax
+            #     )
+            # ) or not (elmin <= elmin_det and elmin_det <= elmax):
+            #     # DEBUG begin
+            #     import pickle
+            #
+            #     with open("bad_quats_{}_{}.pck".format(rank, det), "wb") as fout:
+            #         pickle.dump(
+            #             [scan_range, az, el, azelquat, tod._boresight_azel], fout
+            #         )
+            #     # DEBUG end
+            #     raise RuntimeError(
+            #         prefix + "Detector Az/El: [{:.5f}, {:.5f}], "
+            #         "[{:.5f}, {:.5f}] is not contained in "
+            #         "[{:.5f}, {:.5f}], [{:.5f} {:.5f}]"
+            #         "".format(
+            #             azmin_det,
+            #             azmax_det,
+            #             elmin_det,
+            #             elmax_det,
+            #             azmin,
+            #             azmax,
+            #             elmin,
+            #             elmax,
+            #         )
+            #     )
 
             # Integrate detector signal
 
