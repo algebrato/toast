@@ -5,6 +5,7 @@
 
 #include <_libtoast.hpp>
 
+// add here the strip SS
 
 template <typename T>
 void register_scan_map(py::module & m, char const * name) {
